@@ -3,20 +3,21 @@ import java.io.PrintStream;
 public class Board {
 
     private PrintStream printStream;
-    private String[] board = new String[9];
+    private String[] boardArray;
 
-    public Board(PrintStream printStream) {
+    public Board(PrintStream printStream, String[] boardArray) {
         this.printStream = printStream;
+        this.boardArray = boardArray;
     }
 
 
-    public void printBoard() {
+    public void drawBoard() {
         String visualBoard = "";
-        for(int i = 0; i < board.length; i++){
-            if( board[i] == null){
+        for(int i = 0; i < boardArray.length; i++){
+            if( boardArray[i] == null){
                 visualBoard += i+1 + "|";
             }else{
-                visualBoard += board[i]+ "|";
+                visualBoard += boardArray[i]+ "|";
             }
 
             if((i+1) % 3 == 0){
@@ -26,20 +27,24 @@ public class Board {
         printStream.println(visualBoard);
     }
 
-    public void changeBoard(int slot, int player) {
+    public void placeMark(int slot, int player) {
         if(player == 1){
-            board[slot-1] = "X";
+            boardArray[slot-1] = "X";
         }else{
-            board[slot-1] = "O";
+            boardArray[slot-1] = "O";
         }
-        printBoard();
-
     }
 
-    public boolean isFullAt(int inputNumber) {
-        if(board[inputNumber-1] != null){
+    public boolean isMarkedAt(int inputNumber) {
+        if(boardArray[inputNumber-1] != null){
+            printStream.println("Location already taken");
             return true;
         }
         return false;
     }
+
+    public boolean continueGame() {
+        return true;
+    }
 }
+

@@ -6,9 +6,13 @@ public class Main {
 
     public static void main( String args[]){
         PrintStream printStream = new PrintStream(System.out);
-        Board board = new Board(printStream);
+        String[] boardArray = new String[9];
+        Board board = new Board(printStream, boardArray);
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        new TicTacToe(board, reader, printStream).playGame();
+        Input userInput = new Input(reader);
+        Player playerOne = new Player(userInput, 1, "X", printStream);
+        Player playerTwo = new Player(userInput, 2, "O",printStream);
+        new TicTacToeGame(board, playerOne, playerTwo).playGame();
     }
 }
