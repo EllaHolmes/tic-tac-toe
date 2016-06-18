@@ -47,12 +47,16 @@ public class TicTacToeTest {
 
     @Test
     public void shouldMarkBoardAfterPlayersMove(){
+        when(board.continueGame()).thenReturn(true, false);
+        when(board.isMarkedAt(anyInt())).thenReturn(false);
+
         ticTacToe.playGame();
         verify(board, atLeast(1)).placeMark(anyInt(), anyInt());
     }
 
     @Test
     public void shouldPromptPlayerOneToMoveAgainWhenLocationIsAlreadyMarked(){
+        when(board.continueGame()).thenReturn(true, false);
         when(board.isMarkedAt(anyInt())).thenReturn(true, false);
         ticTacToe.playGame();
         verify(playerOne, atLeast(2)).move();
@@ -60,32 +64,19 @@ public class TicTacToeTest {
 
     @Test
     public void shouldPromptPlayerTwoToMoveAgainWhenLocationIsAlreadyMarked(){
+        when(board.continueGame()).thenReturn(true, false);
         when(board.isMarkedAt(anyInt())).thenReturn(true, false, true, false);
         ticTacToe.playGame();
         verify(playerTwo, atLeast(2)).move();
     }
 
-
-
-    @Ignore
-    public void shouldDrawBoardWhenPlayerTwoPlays() throws IOException {
+    @Test
+    public void shouldRepeatPlayerMovesWhenGameShouldContinue() throws IOException {
         when(board.continueGame()).thenReturn(true,false);
-        InOrder inOrder = inOrder(board, playerTwo);
-        ticTacToe.playGame();
-
-        inOrder.verify(board, atLeast(1)).drawBoard();
-        inOrder.verify(playerTwo).move();
-        inOrder.verify(board, atLeast(1)).drawBoard();
-    }
-
-    @Ignore
-    public void shouldBePlayer1TurnAfterPlayer2Turn(){
-        when(board.continueGame()).thenReturn(true,true,false);
         InOrder inOrder = inOrder(playerOne, playerTwo);
         ticTacToe.playGame();
 
         inOrder.verify(playerOne).move();
         inOrder.verify(playerTwo).move();
-        inOrder.verify(playerOne).move();
     }
 }

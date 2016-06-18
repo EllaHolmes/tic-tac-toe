@@ -17,8 +17,10 @@ public class TicTacToeGame {
     public void playGame() {
         board.drawBoard();
 
-        playerMove(playerOne);
-        playerMove(playerTwo);
+        while (board.continueGame()) {
+            playerMove(playerOne);
+            playerMove(playerTwo);
+        }
     }
 
     public void playerMove(Player player){

@@ -52,15 +52,4 @@ public class BoardTest {
         assertEquals("X", boardArray[4]);
         verify(printStream).println("Location already taken");
     }
-
-    @Test
-    public void shouldNotifyUserLocationOccupiedWhenBoardIsFull(){
-//        when(input.listenForInput()).thenReturn(3);
-//        when(board.isMarkedAt(3)).thenReturn(true, false);
-//        ticTacToe.letThisUserPlay(1);
-//        verify(printStream).println("Location already taken");
-    }
-
-
-
 }
