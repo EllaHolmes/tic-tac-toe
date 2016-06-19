@@ -40,7 +40,7 @@ public class TicTacToeTest {
 
     @Test
     public void shouldPromptForInputWhenSecondPlayersTurn() throws IOException {
-        when(board.continueGame()).thenReturn(true,false);
+        when(board.continueGame()).thenReturn(true,true,false);
         ticTacToe.playGame();
         verify(playerTwo).move();
     }
@@ -51,7 +51,7 @@ public class TicTacToeTest {
         when(board.isMarkedAt(anyInt())).thenReturn(false);
 
         ticTacToe.playGame();
-        verify(board, atLeast(1)).placeMark(anyInt(), anyInt());
+        verify(board, atLeast(1)).placeMark(anyInt(), anyString());
     }
 
     @Test
@@ -64,19 +64,35 @@ public class TicTacToeTest {
 
     @Test
     public void shouldPromptPlayerTwoToMoveAgainWhenLocationIsAlreadyMarked(){
-        when(board.continueGame()).thenReturn(true, false);
-        when(board.isMarkedAt(anyInt())).thenReturn(true, false, true, false);
+        when(board.continueGame()).thenReturn(true,true, false);
+        when(board.isMarkedAt(anyInt())).thenReturn(true, false, true, true, false);
         ticTacToe.playGame();
         verify(playerTwo, atLeast(2)).move();
     }
 
     @Test
     public void shouldRepeatPlayerMovesWhenGameShouldContinue() throws IOException {
-        when(board.continueGame()).thenReturn(true,false);
+        when(board.continueGame()).thenReturn(true,true,false);
         InOrder inOrder = inOrder(playerOne, playerTwo);
         ticTacToe.playGame();
 
         inOrder.verify(playerOne).move();
         inOrder.verify(playerTwo).move();
+    }
+
+    @Test
+    public void shouldStopPlayingWhenBoardIsFull(){
+        when(board.isBoardFull()).thenReturn(true);
+        when(board.continueGame()).thenReturn(true, false);
+        ticTacToe.playGame();
+        verifyZeroInteractions(playerTwo);
+    }
+
+    @Test
+    public void shouldTellThatPlayerWonWhenThreeOfAKind(){
+        when(board.continueGame()).thenReturn(true);
+        when(board.threeOfAKind()).thenReturn(true);
+        ticTacToe.playGame();
+        verify(playerOne).playerWon();
     }
 }

@@ -4,7 +4,7 @@ public class Player {
 
     private final Input userInput;
     public final int playerNumber;
-    private final String mark;
+    public final String mark;
     private PrintStream printStream;
 
     public Player(Input userInput, int playerNumber, String mark, PrintStream printStream) {
@@ -17,5 +17,9 @@ public class Player {
     public int move(){
         printStream.println("Player "+ playerNumber +" : please enter a number");
         return userInput.listenForInput();
+    }
+
+    public void playerWon(){
+        printStream.println("Player "+ playerNumber +" Wins!");
     }
 }

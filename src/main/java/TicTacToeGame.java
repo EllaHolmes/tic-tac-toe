@@ -16,10 +16,15 @@ public class TicTacToeGame {
 
     public void playGame() {
         board.drawBoard();
-
+        int count = 1;
         while (board.continueGame()) {
-            playerMove(playerOne);
-            playerMove(playerTwo);
+            Player currentPlayer = count % 2 == 1 ? playerOne : playerTwo;
+            playerMove(currentPlayer);
+            if(board.threeOfAKind()){
+                currentPlayer.playerWon();
+                break;
+            }
+            count++;
         }
     }
 
@@ -28,7 +33,7 @@ public class TicTacToeGame {
         do{
             locationOfMove = player.move();
         }while(board.isMarkedAt(locationOfMove));
-        board.placeMark(locationOfMove, player.playerNumber);
+        board.placeMark(locationOfMove, player.mark);
 
         board.drawBoard();
     }

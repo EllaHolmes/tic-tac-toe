@@ -33,4 +33,11 @@ public class PlayerTest {
         verify(input).listenForInput();
     }
 
+    @Test
+    public void shouldPrintWinnerMessageWhenPlayerWon(){
+        player.playerWon();
+        verify(printStream).println("Player 1 Wins!");
+
+    }
+
 }
